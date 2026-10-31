@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Navmar Recrutare Marinari</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: structura paginii Fair Spirit (bară de contact, erou cu cifră, despre, 4 servicii, conformitate, selecție, 4 motive, CTA, subsol), cu benzi pe toată lățimea și conținut de max 1160px; vernacular de hartă nautică: coordonate, linii de sondă, cifre condensate */
+:root{
+  --paper:#F1F4F2; --surface:#FFFFFF; --ink:#0D1F2D; --muted:#4A5D6B; --line:#CBD5D6;
+  --deep:#0D1F2D; --deep-2:#16324A; --on-deep:#EEF3F5; --on-deep-muted:#A7BCC8;
+  --signal:#E4572E; --signal-ink:#B23C17; --flag-bg:#FCEDE6; --flag-line:#D9774F; --flag-ink:#8A2E10;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0B1620; --surface:#122230; --ink:#E6EDF1; --muted:#9FB2BE; --line:#26394A;
+  --deep:#07111A; --deep-2:#16324A; --on-deep:#EEF3F5; --on-deep-muted:#A7BCC8;
+  --signal:#F0764F; --signal-ink:#F59A7A; --flag-bg:#2A1A14; --flag-line:#B9603D; --flag-ink:#F4B79F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0B1620; --surface:#122230; --ink:#E6EDF1; --muted:#9FB2BE; --line:#26394A;
+  --deep:#07111A; --deep-2:#16324A; --on-deep:#EEF3F5; --on-deep-muted:#A7BCC8;
+  --signal:#F0764F; --signal-ink:#F59A7A; --flag-bg:#2A1A14; --flag-line:#B9603D; --flag-ink:#F4B79F; color-scheme:dark}
+
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6}
+*{box-sizing:border-box}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band-deep{background:var(--deep);color:var(--on-deep)}
+.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.05;text-wrap:balance;margin:0;letter-spacing:.005em}
+h2{font-size:clamp(34px,4.4vw,48px)}
+h3{font-size:26px;font-weight:600}
+p{margin:0}
+.lead{font-size:19px;color:var(--muted);max-width:62ch}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:3px;font-weight:700;text-decoration:none;font-size:16px;border:2px solid transparent}
+.btn-signal{background:var(--signal);color:#1A0B05}
+.btn-signal:hover{background:var(--signal-ink);color:#FFF}
+.btn-ghost{border-color:var(--on-deep-muted);color:var(--on-deep)}
+.btn-ghost:hover{border-color:var(--on-deep)}
+.todo{border:1px dashed var(--flag-line);background:var(--flag-bg);color:var(--flag-ink);border-radius:3px;padding:14px 18px;font-size:15px}
+
+/* top bar */
+.topbar{background:var(--deep-2);color:var(--on-deep-muted);font-size:14px}
+.topbar .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;padding-block:8px;align-items:center}
+.copy{background:none;border:1px solid transparent;color:var(--on-deep);font:inherit;cursor:pointer;padding:4px 6px;border-radius:3px;min-height:32px}
+.copy:hover{border-color:var(--on-deep-muted)}
+.copy .hint{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;color:var(--on-deep-muted);margin-left:6px}
+
+/* header */
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-block:18px}
+.brand{display:flex;flex-direction:column;text-decoration:none}
+.brand b{font-family:var(--f-display);font-size:30px;letter-spacing:.14em;line-height:1}
+.brand span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;color:var(--on-deep-muted)}
+nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 22px;align-items:center}
+nav a{text-decoration:none;font-weight:600;font-size:15px;color:var(--on-deep)}
+nav a:hover{color:var(--signal)}
+
+/* hero */
+.hero{border-top:1px solid var(--deep-2);position:relative;overflow:hidden}
+.hero .wrap{padding-block:64px 72px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:48px;align-items:end;position:relative}
+.soundings{position:absolute;inset:0;pointer-events:none;opacity:.5}
+.year{font-family:var(--f-display);font-weight:700;font-size:clamp(120px,17vw,220px);line-height:.82;color:var(--on-deep);letter-spacing:-.01em}
+.year small{display:block;font-family:var(--f-body);font-weight:600;font-size:18px;line-height:1.4;color:var(--on-deep-muted);letter-spacing:0;margin-top:18px;max-width:22ch}
+.hero h1{font-size:clamp(40px,5.6vw,66px)}
+.hero p{color:var(--on-deep-muted);font-size:19px;max-width:56ch}
+.hero-copy{display:flex;flex-direction:column;gap:22px;min-width:0}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.coords{font-family:var(--f-mono);font-size:12px;color:var(--on-deep-muted);letter-spacing:.08em}
+
+section.block{padding-block:88px}
+.head{display:flex;flex-direction:column;gap:14px;margin-bottom:44px}
+.eyebrow{color:var(--signal-ink)}
+.band-deep .eyebrow{color:var(--signal)}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:48px}
+.about .text{display:flex;flex-direction:column;gap:16px;font-size:18px}
+.facts{list-style:none;margin:28px 0 0;padding:0;border-top:2px solid var(--ink)}
+.facts li{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.facts .k{color:var(--muted)}
+.facts .v{font-weight:700;text-align:right}
+
+/* services */
+.services{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.svc{background:var(--surface);padding:32px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.svc .mono{color:var(--muted)}
+.svc p{color:var(--muted)}
+.svc ul{margin:4px 0 0;padding-left:18px;color:var(--muted);font-size:16px}
+
+/* compliance */
+.comp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:start}
+.seals{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--deep-2)}
+.seal{display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px;padding:20px 0;border-bottom:1px solid var(--deep-2)}
+.seal b{font-family:var(--f-display);font-size:30px;color:var(--signal);line-height:1}
+.seal p{color:var(--on-deep-muted)}
+.band-deep .todo{background:transparent;color:#F4B79F;border-color:#B9603D}
+
+/* selection */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.steps li{border-top:4px solid var(--ink);padding-top:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps .n{font-family:var(--f-mono);color:var(--signal-ink);font-size:13px}
+.steps b{font-size:18px;line-height:1.3}
+.note{margin-top:36px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;color:var(--muted)}
+
+/* why */
+.why{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 56px}
+.why div{display:flex;flex-direction:column;gap:8px;min-width:0}
+.why h3{font-size:24px}
+.why p{color:var(--muted)}
+
+/* jobs */
+.jobs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
+.job{padding:22px 20px 22px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:4px;min-width:0}
+.job b{font-family:var(--f-display);font-size:30px;font-weight:600;line-height:1.1}
+.job .mono{color:var(--muted)}
+.vessels{margin-top:20px;color:var(--muted)}
+
+/* reviews */
+.reviews{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.reviews .todo{min-height:150px}
+
+/* cta */
+.cta .wrap{padding-block:72px;display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:space-between}
+.cta h2{max-width:20ch}
+.cta p{color:var(--on-deep-muted);margin-top:12px;max-width:52ch}
+
+/* footer */
+footer{background:var(--deep);color:var(--on-deep-muted);font-size:15px;border-top:1px solid var(--deep-2)}
+footer .wrap{padding-block:56px 28px;display:grid;grid-template-columns:minmax(0,1.4fr) repeat(2,minmax(0,1fr));gap:40px}
+footer h4{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--on-deep);margin:0 0 14px;font-weight:500}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+footer a{color:var(--on-deep);text-decoration:none}
+footer a:hover{color:var(--signal)}
+.legal{grid-column:1/-1;border-top:1px solid var(--deep-2);padding-top:20px;font-size:13px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+.shipowner{background:var(--deep-2);color:var(--on-deep)}
+.shipowner .wrap{padding-block:22px;display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center}
+
+@media (max-width:900px){
+  .hero .wrap,.about,.comp{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .jobs,.reviews{grid-template-columns:minmax(0,1fr)}
+  footer .wrap{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .services,.why,.note{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .seal{grid-template-columns:minmax(0,1fr);gap:8px}
+  section.block{padding-block:64px}
+  .svc{padding:24px}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <button class="copy" type="button" data-copy="cv@navmar.eu" id="copy-mail">cv@navmar.eu<span class="hint">COPIAZĂ</span></button>
+    <button class="copy" type="button" data-copy="+40 341 100 192" id="copy-phone">+40 341 100 192<span class="hint">COPIAZĂ</span></button>
+    <span>Luni – vineri, 09:00 – 17:00</span>
+  </div>
+</div>
+
+<header class="band-deep">
+  <div class="wrap">
+    <a class="brand" href="#acasa" aria-label="Navmar, începutul paginii"><b>NAVMAR</b><span>SHIPPING &amp; SERVICES · CONSTANȚA</span></a>
+    <nav aria-label="Meniu principal">
+      <ul>
+        <li><a href="#despre">Despre noi</a></li>
+        <li><a href="#servicii">Servicii</a></li>
+        <li><a href="#posturi">Posturi</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a class="btn btn-signal" href="#aplica">Trimite CV-ul</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero band-deep" id="acasa">
+  <svg class="soundings" viewBox="0 0 1200 520" preserveAspectRatio="none" aria-hidden="true">
+    <g fill="none" stroke="#2A4A63" stroke-width="1">
+      <path d="M0 410 C200 380 340 440 560 400 S900 330 1200 370"/>
+      <path d="M0 450 C220 420 380 480 600 440 S920 380 1200 410"/>
+      <path d="M0 490 C240 465 400 515 640 480 S940 430 1200 455"/>
+    </g>
+    <g fill="#3B5D78" font-family="IBM Plex Mono, monospace" font-size="11">
+      <text x="140" y="395">12</text><text x="420" y="430">14</text><text x="760" y="372">16</text><text x="1040" y="400">18</text>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="year">2003<small>anul în care Navmar a pornit ca agenție de crewing, în Constanța</small></div>
+    <div class="hero-copy">
+      <span class="mono eyebrow">Agenție de recrutare și plasare marinari</span>
+      <h1>Următorul tău contract pe mare începe de la Constanța.</h1>
+      <p>Navmar Shipping &amp; Services este autorizată de Autoritatea Navală Română pentru recrutarea și plasarea marinarilor pe nave sub pavilion românesc sau străin. Recrutăm pentru vrachiere, tancuri, nave Ro-Ro și offshore.</p>
+      <div class="ctas">
+        <a class="btn btn-signal" href="#aplica">Vezi cum aplici</a>
+        <a class="btn btn-ghost" href="#posturi">Posturi active</a>
+      </div>
+      <span class="coords">CONSTANȚA · 44°10′N 28°38′E · STR. DR. ARISTIDE KARATZALI 7–7A</span>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="despre">
+  <div class="wrap about">
+    <div class="head" style="margin:0">
+      <span class="mono eyebrow">Despre noi</span>
+      <h2>Am început ca agenție de crewing. Am crescut într-un grup de companii.</h2>
+    </div>
+    <div>
+      <div class="text">
+        <p>Grupul Navmar a fost înființat în Constanța, în 2003, ca firmă privată. A pornit ca agenție de crewing și s-a dezvoltat într-un grup de companii dedicat serviciilor pentru echipaje.</p>
+        <p>Calitatea, siguranța și angajamentul stau la baza activității noastre. De aceea investim continuu în pregătirea oamenilor de la birou, de pe uscat și de pe mare, ca să țină pasul cu cerințele pieței.</p>
+        <p>Recrutăm sute de marinari pentru clienții noștri și ne ocupăm, în paralel, de planificarea și rotația echipajelor pe nave de toate clasele.</p>
+      </div>
+      <ul class="facts">
+        <li><span class="k">Înființare</span><span class="v">2003, Constanța</span></li>
+        <li><span class="k">Autorizare</span><span class="v">Autoritatea Navală Română</span></li>
+        <li><span class="k">Conformitate</span><span class="v">STCW · MLC 2006</span></li>
+        <li><span class="k">Bază de date</span><span class="v">Mii de marinari înregistrați</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="servicii" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <span class="mono eyebrow">Serviciile noastre</span>
+      <h2>Ce posturi acoperim</h2>
+    </div>
+    <div class="services">
+      <article class="svc">
+        <span class="mono">Crewing</span>
+        <h3>Personal pentru nave comerciale</h3>
+        <p>Recrutăm și plasăm marinari pentru aproape orice tip de navă, de la vrachiere la nave offshore de aprovizionare și nave heavy-lift.</p>
+        <ul><li>Vrachiere și tancuri</li><li>Nave multipurpose și Ro-Ro: car carriers, breakbulk, project cargo</li></ul>
+      </article>
+      <article class="svc">
+        <span class="mono">Oil &amp; Gas</span>
+        <h3>Echipaje offshore, toate gradele</h3>
+        <p>Personal pentru nave de explorare, foraj și aprovizionare. Contracte pe termen scurt, pe proiect sau permanente.</p>
+        <ul><li>AHTS, PSV, hotel ships, drill ships</li><li>Jack-up și nave de instalare cabluri</li></ul>
+      </article>
+      <article class="svc">
+        <span class="mono">Riding teams</span>
+        <h3>Echipe de reparații la bord și în șantier</h3>
+        <p>Muncitori cu experiență pentru înlocuiri și reparații, pe mare și pe uscat. Echipele includ șefi de echipă, maiștri și ingineri.</p>
+        <ul><li>Fitteri, tubulatori, sudori certificați</li><li>Sablatori, vopsitori, cazangii, lăcătuși de tablă navală</li></ul>
+      </article>
+      <article class="svc">
+        <span class="mono">Mobilitate</span>
+        <h3>Drumul spre navă și înapoi</h3>
+        <p>Planificăm schimbul de echipaj pentru fiecare navă, în funcție de zona în care operează, cu variante de rezervă pentru situațiile de ultim moment.</p>
+        <ul><li>Rute de tranzit și asistență pentru imigrare</li><li>Soluții pentru repatrierea echipajului</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="block band-deep">
+  <div class="wrap comp">
+    <div class="head" style="margin:0">
+      <span class="mono eyebrow">Conformitate și siguranță</span>
+      <h2>Lucrezi cu o agenție autorizată</h2>
+      <p style="color:var(--on-deep-muted);font-size:18px;max-width:46ch">Serviciile noastre de manning respectă STCW și MLC 2006. Tot personalul pe care îl plasăm are certificatele cerute pentru gradul și postul lui.</p>
+    </div>
+    <div>
+      <div class="seals">
+        <div class="seal"><b>ANR</b><p>Autorizație de la Autoritatea Navală Română pentru recrutarea și plasarea marinarilor pe nave sub pavilion românesc sau străin.</p></div>
+        <div class="seal"><b>MLC 2006</b><p>Servicii de manning conforme cu Convenția privind Munca în Domeniul Maritim.</p></div>
+        <div class="seal"><b>STCW</b><p>Fiecare marinar plasat are certificarea cerută pentru gradul și angajarea lui.</p></div>
+      </div>
+      <p class="todo" style="margin-top:20px">[DE CONFIRMAT DE NAVMAR: numărul autorizației ANR și declarația că marinarul nu plătește taxe de recrutare sau plasare, conform MLC 2006, Regula 1.4]</p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="head">
+      <span class="mono eyebrow">Cum te selectăm</span>
+      <h2>Cinci verificări înainte de fiecare recrutare</h2>
+      <p class="lead">Fiecare recrutare trece printr-o verificare completă. Așa ajungi pe un post potrivit cu experiența și gradul tău.</p>
+    </div>
+    <ol class="steps">
+      <li><span class="n">1</span><b>Verificarea trecutului profesional</b></li>
+      <li><span class="n">2</span><b>Verificarea competențelor</b></li>
+      <li><span class="n">3</span><b>Evaluarea activității anterioare</b></li>
+      <li><span class="n">4</span><b>Interviu personal</b></li>
+      <li><span class="n">5</span><b>Reputația printre colegi</b></li>
+    </ol>
+    <div class="note">
+      <p>La interviu urmărim personalitatea, aptitudinile, spiritul de conducere și felul în care lucrezi cu oamenii.</p>
+      <p>Toți ofițerii selectați pentru posturile Top Four sunt intervievați de conducerea Navmar.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" style="background:var(--surface);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="mono eyebrow">De ce Navmar</span>
+      <h2>De ce să lucrezi cu noi</h2>
+    </div>
+    <div class="why">
+      <div><h3>Răspuns rapid la posturile noi</h3><p>Trimitem anunțurile pe mai multe canale și strângem răspunsurile candidaților în cel mai scurt timp, ca să ocupăm și posturile apărute pe neașteptate.</p></div>
+      <div><h3>O bază de date digitală</h3><p>Ținem evidența actualizată a mii de marinari, ceea ce scurtează timpul de selecție.</p></div>
+      <div><h3>Planificare și rotație</h3><p>Ne ocupăm de planificarea și rotația echipajelor pe nave de toate clasele, pentru clienți cu nevoi de echipaj pe termen lung.</p></div>
+      <div><h3>Loc și pentru cadeți</h3><p>Navmar are o politică activă de integrare a cadeților în echipaje, ca răspuns la lipsa de ofițeri din piață.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="posturi">
+  <div class="wrap">
+    <div class="head">
+      <span class="mono eyebrow">Posturi active · anunțuri Navmar pe ainostri.ro, 30 oct. 2026</span>
+      <h2>Posturi deschise acum</h2>
+    </div>
+    <div class="jobs">
+      <div class="job"><span class="mono">Punte</span><b>Chief Mate</b></div>
+      <div class="job"><span class="mono">Mașină</span><b>Second Engineer</b></div>
+      <div class="job"><span class="mono">Punte · DP</span><b>2nd Officer DPO</b></div>
+    </div>
+    <p class="vessels">Pe nave Supply, Anchor Handling Tug Supply (AHTS), Platform Supply Vessel (PSV), DP1 și DP2.</p>
+    <p class="todo" style="margin-top:16px">[DE COMPLETAT DE NAVMAR: pentru fiecare post, nava, pavilionul, salariul, durata contractului și data estimată de îmbarcare, dacă pot fi publicate]</p>
+  </div>
+</section>
+
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <span class="mono eyebrow">Recenzii</span>
+      <h2>Ce spun marinarii</h2>
+    </div>
+    <div class="reviews">
+      <p class="todo">[RECENZIE GOOGLE REALĂ 1: text, prenume, grad, cu acordul autorului]</p>
+      <p class="todo">[RECENZIE GOOGLE REALĂ 2]</p>
+      <p class="todo">[RECENZIE GOOGLE REALĂ 3]</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta band-deep" id="aplica">
+  <div class="wrap">
+    <div>
+      <span class="mono eyebrow">Cum aplici</span>
+      <h2 style="margin-top:14px">Trimite formularul și CV-ul la cv@navmar.eu</h2>
+      <p>Completează formularul Navmar F 01 – Application Form și trimite-l împreună cu CV-ul. Poți trece și pe la birou, luni – vineri, 09:00 – 17:00.</p>
+    </div>
+    <button class="btn btn-signal copy" type="button" data-copy="cv@navmar.eu" id="copy-mail-cta" style="color:#1A0B05">Copiază adresa cv@navmar.eu</button>
+  </div>
+</section>
+
+<div class="shipowner">
+  <div class="wrap">
+    <p><strong>Sunteți armator sau manager de echipaj?</strong> Oferim manning complet sau parțial pentru o navă și crew management pentru întreaga flotă.</p>
+    <span>nvms-ro@navmar.eu</span>
+  </div>
+</div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div>
+      <h4>Navmar Shipping &amp; Services</h4>
+      <p>Str. Dr. Aristide Karatzali nr. 7–7A, corp C1, parter<br>Constanța 900746, România<br>vizavi de Teatrul „Căluțul de mare” (ELPIS)</p>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li>CV-uri: cv@navmar.eu</li>
+        <li>Telefon: +40 341 100 192</li>
+        <li>Fax: +40 341 453 049</li>
+        <li>Luni – vineri, 09:00 – 17:00</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Urmărește-ne</h4>
+      <ul>
+        <li><a href="https://www.facebook.com/profile.php?id=100063690035233" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="https://www.linkedin.com/company/navmar-shipping-services-srl" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.navmar.eu/privacy-policy/" target="_blank" rel="noopener">Politica de confidențialitate</a></li>
+      </ul>
+    </div>
+    <div class="legal"><span>© Navmar Shipping &amp; Services SRL</span><span>Constanța · România</span></div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('button[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=b.getAttribute('data-copy'), orig=b.innerHTML;
+    function done(msg){b.innerHTML=msg;setTimeout(function(){b.innerHTML=orig},1600)}
+    try{
+      navigator.clipboard.writeText(t).then(function(){done('Copiat: '+t)},function(){done(t)});
+    }catch(e){done(t)}
+  });
+});
+</script>
+</body>
+</html>
